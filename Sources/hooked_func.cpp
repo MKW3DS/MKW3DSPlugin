@@ -1,6 +1,7 @@
 #include "CTRPluginFramework.hpp"
 #include "main.hpp"
 #include "save.hpp"
+#include "Lang.hpp"
 #include "rt.h"
 #include <map>
 
@@ -224,5 +225,39 @@ namespace CTRPluginFramework {
 	int fsSetSaveDataSecureValue(u64 a1, u32 a2, u64 a3, u8 a4 ) { // 0x08750180
 		DEBUG("fsSetThisSaveDataSecureValue called with secure value 0x%016llX, ignoring.\n", a1);
 		return 0;
+	}
+}
+
+extern "C" void getmsbtptrfromobj(u32* objref);
+
+void getmsbtptrfromobj(u32* objref)
+{
+	static bool commonLoaded = false;
+	static bool menuLoaded = false;
+	if (strcmp((char*)(objref + 3), "Common") == 0) {
+		u32* fileptr = (u32*)(objref[0xC] - 0x30);
+		u32* newptr = fileptr + 0xc + (fileptr[9] / sizeof(u32));
+		newptr += 0x8 - (((u32)newptr % 0x10) / sizeof(u32));
+		if (commonLoaded) {
+			CTRPluginFramework::Language::commonMsbt->updatePtr(newptr);
+		}
+		else {
+			commonLoaded = true;
+			CTRPluginFramework::Language::commonMsbt = new CTRPluginFramework::Language::MsbtHandler(newptr);
+			CTRPluginFramework::Language::applyMsbt('$', *CTRPluginFramework::Language::commonMsbt);
+		}
+	}
+	else if (strcmp((char*)(objref + 3), "Menu") == 0) {
+		u32* fileptr = (u32*)(objref[0xC] - 0x30);
+		u32* newptr = fileptr + 0xc + (fileptr[9] / sizeof(u32));
+		newptr += 0x8 - (((u32)newptr % 0x10) / sizeof(u32));
+		if (menuLoaded) {
+			CTRPluginFramework::Language::menuMsbt->updatePtr(newptr);
+		}
+		else {
+			menuLoaded = true;
+			CTRPluginFramework::Language::menuMsbt = new CTRPluginFramework::Language::MsbtHandler(newptr);
+			CTRPluginFramework::Language::applyMsbt('%', *CTRPluginFramework::Language::menuMsbt);
+		}
 	}
 }

@@ -12,6 +12,9 @@
 #define NAME(key)           (Language::GetName(key))
 #define NOTE(key)           (Language::GetNote(key))
 
+//Change this line to the folder of the .txt files
+#define LANGFILES "/MKWII3DS/lang/"
+
 namespace CTRPluginFramework
 {
     using LangMap = std::map<std::string, std::tuple<std::string, std::string>>;

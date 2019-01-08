@@ -2,6 +2,7 @@
 #include "main.hpp"
 #include "save.hpp"
 #include "ptm.h"
+#include "Lang.hpp"
 
 u8 fsMountArchivePat1[] = { 0x10, 0x00, 0x97, 0xE5, 0xD8, 0x20, 0xCD, 0xE1, 0x00, 0x00, 0x8D };
 u8 fsMountArchivePat2[] = { 0x28, 0xD0, 0x4D, 0xE2, 0x00, 0x40, 0xA0, 0xE1, 0xA8, 0x60, 0x9F, 0xE5, 0x01, 0xC0, 0xA0, 0xE3 };
@@ -14,6 +15,9 @@ u8 fsSetThisSecValPat[] = {0xC0, 0x00, 0x6E, 0x08};
 u8 fsObsSetThisSecValPat[] = {0x40, 0x01, 0x65, 0x08};
 u8 fsSetSecValPat[] = {0x80, 0x01, 0x75, 0x08};
 u8 fsCheckPermsPat[] = { 0x04, 0x10, 0x12, 0x00, 0x76, 0x46, 0x00, 0xD9 };
+
+u8 msbtConsPat[] = { 0x25, 0x73, 0x2E, 0x6D, 0x73, 0x62, 0x74, 0x00};
+u32 g_msbtconstret = 0x100000;
 
 namespace CTRPluginFramework
 {
@@ -28,6 +32,7 @@ namespace CTRPluginFramework
 	RT_HOOK fsSetThisSecValHook = { 0 };
 	RT_HOOK fsObsSetThisSecValHook = { 0 };
 	RT_HOOK fsSetSecValHook = { 0 };
+	RT_HOOK getmsbtptrfromobjhook = { 0 };
 	u32 fsMountArchive = 0;
 	char g_ProcessTID[17];
 	bool canSaveRedirect = false;
@@ -223,8 +228,8 @@ namespace CTRPluginFramework
 	void initOnionFSHooks(u32 textSize) {
 		u32* addr = (u32*)0x100000;
 		u32* endAddr = (u32*)(0x100000 + textSize);
-		bool contOpen = true, contMount = true, contReg = true, contArch = true, contDelete = true, contSetThis = true, contSetObs = true, contSet = true;
-		while (addr < endAddr && (contOpen || contMount || contReg || contArch || contDelete || contSetThis || contSetObs || contSet)) {
+		bool contOpen = true, contMount = true, contReg = true, contArch = true, contDelete = true, contSetThis = true, contSetObs = true, contSet = true, langSet = true;
+		while (addr < endAddr && (contOpen || contMount || contReg || contArch || contDelete || contSetThis || contSetObs || contSet || langSet)) {
 			if (contOpen && memcmp(addr, userFsTryOpenFilePat1, sizeof(userFsTryOpenFilePat1)) == 0 || memcmp(addr, userFsTryOpenFilePat2, sizeof(userFsTryOpenFilePat2)) == 0) {
 				u32* fndaddr = findNearestSTMFD(addr);
 				DEBUG("tryOpenFile found at 0x%08X\n", (u32)fndaddr);
@@ -279,6 +284,11 @@ namespace CTRPluginFramework
 				rtInitHook(&fsSetSecValHook, (u32)fndaddr, (u32)fsSetSaveDataSecureValue);
 				rtEnableHook(&fsSetSecValHook);
 			}
+			if (langSet && memcmp(addr, msbtConsPat, sizeof(msbtConsPat)) == 0) {
+				rtInitHook(&getmsbtptrfromobjhook, (u32)addr - 0x48, (u32)msbtconstfunc);
+				g_msbtconstret = (u32)addr - 0x40;
+				rtEnableHook(&getmsbtptrfromobjhook);
+			}
 			addr++;
 		}
 		if (fsSetThisSecValHook.isEnabled || fsObsSetThisSecValHook.isEnabled || fsSetSecValHook.isEnabled) {
@@ -298,6 +308,7 @@ namespace CTRPluginFramework
 		LightLock_Init(&openLock);
 		OnionSave::loadSettings();
 		OnionSave::setupPackPaths();
+		Language::Initialize();
 		DEBUG("\n----------------------------------------\nInitializing hooks:\n\n");
 		initOnionFSHooks(Process::GetTextSize());
 		DEBUG("\nAll hooks initialized, starting game.\n----------------------------------------\n\n");
@@ -391,12 +402,12 @@ namespace CTRPluginFramework
 
     static void    CreateMenu(PluginMenu &menu)
     {
-		menu.Append(new MenuEntry("This should be hidden", nullptr, onionConfig, "Ignore this..."));
+		//menu.Append(new MenuEntry("DEBUG GEN ONIONFS", nullptr, onionConfig, "Use to generate onionfs save files."));
     }
 
     int    main(void)
     {
-        PluginMenu      *menu = new PluginMenu("OnionFS", MAJOR_VERSION, MINOR_VERSION, REVISION_VERSION, about);
+        PluginMenu      *menu = new PluginMenu("MKWII3DS", MAJOR_VERSION, MINOR_VERSION, REVISION_VERSION, about);
 
         menu->SynchronizeWithFrame(true);
 		menu->ShowWelcomeMessage(false);

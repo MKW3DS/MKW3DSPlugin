@@ -1,15 +1,18 @@
 Author: PabloMK7
 
 Version: # Plugin version
-    Major: 2
+    Major: 1
     Minor: 0
     Revision: 0
 
 Targets: # Low TitleId of games which are compatibles with this plugin (empty for all)
+    - 0x00030600
+    - 0x00030700
+    - 0x00030800
 
-Title: OnionFS
+Title: MKWII3DS
 
-Summary: ROMFS and SAVE redirection.
+Summary: MKWII3DS game extension for MK7
 
 Description: |
-  This plugin redirects ROMFS and SAVE access to the SD cards allowing multiple save slots and rom hacks.
+  This plugin is part of the MKWII3DS modpack, cannot be used separately.

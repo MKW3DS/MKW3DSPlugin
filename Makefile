@@ -9,7 +9,7 @@ TOPDIR 		?= 	$(CURDIR)
 include $(DEVKITARM)/3ds_rules
 
 TARGET		:= 	mkw3ds
-PLGINFO		:= 	OnionFS.plgInfo
+PLGINFO		:= 	MKWII3DS.plgInfo
 BUILD		:= 	Build
 INCLUDES	:= 	Includes
 LIBDIRS		:= 	$(TOPDIR)

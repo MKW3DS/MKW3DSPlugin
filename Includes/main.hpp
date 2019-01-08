@@ -38,6 +38,7 @@ typedef u32(*fsu16u64)(u16*, u64);
 typedef u32(*fsu32u16)(u32, u16*);
 
 extern "C" void customBreak(u32 a1, u32 a2, u32 a3);
+extern "C" void msbtconstfunc();
 
 typedef struct miniHeap_s {
 	u8 data[0x10][0x200];
