@@ -285,6 +285,7 @@ namespace CTRPluginFramework
 				rtEnableHook(&fsSetSecValHook);
 			}
 			if (langSet && memcmp(addr, msbtConsPat, sizeof(msbtConsPat)) == 0) {
+				langSet = false;
 				rtInitHook(&getmsbtptrfromobjhook, (u32)addr - 0x48, (u32)msbtconstfunc);
 				g_msbtconstret = (u32)addr - 0x40;
 				rtEnableHook(&getmsbtptrfromobjhook);
