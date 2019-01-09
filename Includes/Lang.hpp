@@ -13,7 +13,7 @@
 #define NOTE(key)           (Language::GetNote(key))
 
 //Change this line to the folder of the .txt files
-#define LANGFILES "/MKWII3DS/lang/"
+#define LANGFILES "/MKW3DS/lang/"
 
 namespace CTRPluginFramework
 {

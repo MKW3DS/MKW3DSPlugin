@@ -3,7 +3,7 @@
 #include "rt.h"
 #include "csvc.h"
 
-#define TOP_DIR "/OnionFS"
+#define TOP_DIR "/MKW3DS"
 #define NUMBER_FILE_OP 9
 #define MAJOR_VERSION       2
 #define MINOR_VERSION       0
