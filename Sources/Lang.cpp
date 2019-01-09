@@ -2,7 +2,7 @@
 #include "CTRPluginFramework.hpp"
 #include "3ds.h"
 #include <algorithm>
-
+#include "rt.h"
 
 namespace CTRPluginFramework
 {
@@ -42,6 +42,8 @@ namespace CTRPluginFramework
         ""
     };
 
+	extern RT_HOOK getmsbtptrfromobjhook;
+
     void    Language::Initialize(void)
     {
         _currentLanguage = static_cast<u32>(System::GetSystemLanguage());
@@ -59,9 +61,8 @@ namespace CTRPluginFramework
             _ImportLanguage();
             return;
         } else {
-            Sleep(Seconds(2.5));
-            (MessageBox(Color::Red << "ERROR", "No language files detected, aborting."))();
-            abort();
+			rtDisableHook(&getmsbtptrfromobjhook);
+			return;
         }
     }
 

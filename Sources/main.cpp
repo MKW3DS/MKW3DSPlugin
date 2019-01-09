@@ -309,10 +309,10 @@ namespace CTRPluginFramework
 		LightLock_Init(&openLock);
 		OnionSave::loadSettings();
 		OnionSave::setupPackPaths();
-		Language::Initialize();
 		DEBUG("\n----------------------------------------\nInitializing hooks:\n\n");
 		initOnionFSHooks(Process::GetTextSize());
 		DEBUG("\nAll hooks initialized, starting game.\n----------------------------------------\n\n");
+		Language::Initialize();
     }
     
     const std::string about = u8"\n" \
