@@ -303,6 +303,7 @@ namespace CTRPluginFramework
 
     void  PatchProcess(FwkSettings &settings)
     {
+		Directory::ChangeWorkingDirectory(TOP_DIR"/resources");
 		u64 tid = Process::GetTitleID();
 		sprintf(g_ProcessTID, "%016lX", tid);
 		LightLock_Init(&regLock);
