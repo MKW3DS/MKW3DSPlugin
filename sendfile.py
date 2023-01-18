@@ -1,4 +1,4 @@
-#!/usr/bin/env Python
+#!/usr/bin/python3
 
 import sys
 import ftplib
@@ -18,10 +18,10 @@ if __name__ == '__main__':
 		filename = sys.argv[1]
 		path = sys.argv[2]
 		host = sys.argv[3]
-		port = sys.argv[4]
+		port = int(sys.argv[4])
 
 		ftp = FTP()
-		printf("Connecting to " + host + ":" + port);
+		printf("Connecting to " + host + ":" + str(port));
 		ftp.connect(host, port);
 		printf("Connected");
 
