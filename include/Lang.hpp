@@ -8,12 +8,13 @@
 #include <vector>
 #include <tuple>
 #include <map>
+#include "main.hpp"
 
 #define NAME(key)           (Language::GetName(key))
 #define NOTE(key)           (Language::GetNote(key))
 
 //Change this line to the folder of the .txt files
-#define LANGFILES "/MKW3DS/lang/"
+#define LANGFILES   TOP_DIR "/lang/"
 
 namespace CTRPluginFramework
 {

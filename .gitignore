@@ -30,8 +30,8 @@
 *.exe
 *.out
 *.app
-=======
+
 build/
 *.lst
 .vs
-*.3gx
+*.elf

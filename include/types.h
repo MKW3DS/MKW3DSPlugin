@@ -83,6 +83,4 @@ typedef void (*voidfn)(void);
 #define CUR_THREAD_HANDLE       0xFFFF8000
 #define CUR_PROCESS_HANDLE      0xFFFF8001
 
-/// Structure representing CPU registers
-
 #endif

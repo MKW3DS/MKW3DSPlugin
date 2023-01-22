@@ -1,19 +1,18 @@
 Author: PabloMK7
 
-Version: # Plugin version
+Version:
     Major: 1
     Minor: 0
     Revision: 1
 
-Targets: # Low TitleId of games which are compatibles with this plugin (empty for all)
-    - 0x00030600
-    - 0x00030700
-    - 0x00030800
-    - 0x00030A00
-    - 0x0008B400
-    - 0x0008B500
+Targets:
+    - 0x00030600 # JPN
+    - 0x00030700 # EUR
+    - 0x00030800 # USA
+    - 0x00030A00 # KOR
+    - 0x0008B400 # TWN
 
-Title: MKW3DS
+Title: Mario Kart Wii 3DS
 
 Summary: MKW3DS game extension for MK7
 

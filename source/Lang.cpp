@@ -42,7 +42,7 @@ namespace CTRPluginFramework
         "Lang_TWN.txt"
     };
 
-	extern RT_HOOK getmsbtptrfromobjhook;
+    extern RT_HOOK getmsbtptrfromobjhook;
 
     void    Language::Initialize(void)
     {
@@ -61,8 +61,8 @@ namespace CTRPluginFramework
             _ImportLanguage();
             return;
         } else {
-			rtDisableHook(&getmsbtptrfromobjhook);
-			return;
+            rtDisableHook(&getmsbtptrfromobjhook);
+            return;
         }
     }
 
