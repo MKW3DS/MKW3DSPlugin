@@ -384,9 +384,13 @@ exit:
     {
         ToggleTouchscreenForceOn();
     }
-
+    
+    void dummyEntry(MenuEntry *entry){}
+    
     void    InitMenu(PluginMenu &menu)
     {
+        menu += new MenuEntry("[Coming soon] Custom Character Manager", nullptr, dummyEntry, "");
+        menu += new MenuEntry("[Coming soon] Plugin Details", nullptr, dummyEntry, "");
         // Create your entries here, or elsewhere
         // You can create your entries whenever/wherever you feel like it
         
